@@ -19,7 +19,7 @@ cpu = 0
 mem = 0
 tmp = 0
 
-cfg_speed = 100
+cfg_speed = 1
 cfg_threshold = 50
 
 def get_info():
@@ -47,25 +47,28 @@ def to_bytes(bytes_or_str):
 def get_cfg():
     global cfg_speed, cfg_threshold
 
-    def_config = {"speed":100, "threshold":50}
+    def_config = {"speed":1, "threshold":50}
 
     try:
-        with open("/home/pi/SmartFan.cfg","r") as f_cfg:
+        with open("/home/pi/SmartFan.conf","r") as f_cfg:
             f = f_cfg.read()
     except:
-        with open("/home/pi/SmartFan.cfg","w") as f_cfg:
+        with open("/home/pi/SmartFan.conf","w") as f_cfg:
             json.dump(def_config,f_cfg,indent=4)
 
-        with open("/home/pi/SmartFan.cfg","r") as f_cfg:
+        with open("/home/pi/SmartFan.conf","r") as f_cfg:
             f = f_cfg.read()
 
     config = json.loads(f)
-    print(config)
+    #print(config)
     for x,y in config.items():
         if x == "speed" :
             cfg_speed = y
         elif x == "threshold" :
             cfg_threshold = y
+    
+    print("speed = %d \t cpu threshold = %d " %(cfg_speed,cfg_threshold) )
+
 
 
 def send_buf():
@@ -83,7 +86,7 @@ def send_buf():
     send_buf = "$SmartFAN,"+str(cpu)+","+str(mem)+","+str(speed_tmp)+","+str((cpu+mem+speed_tmp)%100)+"$"
     #print(send_buf)
     send_buf = to_bytes(send_buf)
-    print(send_buf)
+    print("UART TX <=== %s" %send_buf)
     ser.write(send_buf)
     time.sleep(1)
 
@@ -94,13 +97,13 @@ def recv_proc():
      n = ser.inWaiting()
      if n:
          data = data + ser.read(n)
-         print('get data from serial port:', data)
+         #print('get data from serial port:', data)
          #print(type(data))
 
          str_tmp = to_str(data).strip("")
          str_tmp = to_str(data).strip("$")
 
-         print(str_tmp)
+         print('\nUART RX ==>',str_tmp)
 
          recv_buf = str_tmp.split(",")
 
@@ -117,11 +120,11 @@ def recv_proc():
                  #print("0.normal op,send back ")
                  send_buf()
              elif halt_reboot == 1:
-                 print("1.halt")
-                 #os.system("sudo halt")
+                 print("excute halt")
+                 os.system("sudo halt")
              elif halt_reboot== 2:
-                 print("2.reboot")
-                 #os.system("sudo reboot")
+                 print("excute reboot")
+                 os.system("sudo reboot")
          else:
              print("check_sum error!")
 
