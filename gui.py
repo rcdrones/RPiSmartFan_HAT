@@ -38,7 +38,10 @@ window.geometry("400x400")
 
 canvas = tk.Canvas(window, width=400,height=268)
 
-image_file = tk.PhotoImage(file='rpi.png')
+try:
+    image_file = tk.PhotoImage(file='/usr/sbin/rpi.png')
+except:
+    image_file = tk.PhotoImage(file='rpi.png')
 image = canvas.create_image(0, 0, anchor='nw', image=image_file)
 canvas.pack()
 
