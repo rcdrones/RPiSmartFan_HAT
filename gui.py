@@ -57,6 +57,7 @@ l_temp.place(x=220,y=300,anchor="nw")
 def cpu_temp(v):
     global def_config
     def_config["threshold"] = int(v)
+    def_config["speed"] = int(cfg_speed)
     with open("/home/pi/SmartFan.conf","w") as f_cfg:
         json.dump(def_config,f_cfg,indent=4)
 
