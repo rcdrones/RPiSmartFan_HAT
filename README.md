@@ -31,12 +31,17 @@ This is Smart fan hat for pi4/pi3(and 40GPIO) , include gui program , and manual
 # 软件安装教学
 ## 一键安装
 ```
-
+wget -qO- https://git.io/Je3ZS | sudo bash
 ```
 ## 一键卸载
 ```
-
+wget -qO- https://git.io/Je3ZH | sudo bash
 ```
+### git.io短网址产生
+```
+curl -i https://git.io -F url="https://github.com/rcdrones/RPiSmartFan_HAT/raw/master/uninstall.sh" 
+```
+
 ## 二次开发下载源代码：
 ```
 git clone https://github.com/rcdrones/RPiSmartFan_HAT
