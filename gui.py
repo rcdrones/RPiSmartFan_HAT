@@ -94,10 +94,12 @@ def fan_speed():
 
 
 r = tk.IntVar()
+r.set(cfg_speed)
 quit_select = tk.Radiobutton(window,text='Quiet Mode',value=1,variable=r,command=fan_speed)
 quit_select.place(x=30,y=345,anchor="nw")
 pfm_select = tk.Radiobutton(window,text='Performance Mode',value=2,variable=r,command=fan_speed)
 pfm_select.place(x=30,y=370,anchor="nw")
+
 
 
 
