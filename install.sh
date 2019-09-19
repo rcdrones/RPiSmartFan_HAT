@@ -37,3 +37,4 @@ chown root:root /usr/sbin/rpi_info.py
 systemctl enable SmartFans_daemon
 systemctl start SmartFans_daemon &
 
+reboot
