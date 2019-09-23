@@ -81,6 +81,12 @@ s_temp.place(x=10,y=280,anchor="nw")
 l_speed = tk.Label(window, bg='yellow', width=25, text='')
 l_speed.place(x=200,y=360,anchor="nw")
 
+if cfg_speed == 1:
+    l_speed.config(text='Fans Mode : Quiet')
+elif cfg_speed == 2:
+    l_speed.config(text='Fans Mode : Performance')
+        
+
 
 def fan_speed():
     global def_config
@@ -92,6 +98,7 @@ def fan_speed():
         l_speed.config(text='Fans Mode : Quiet')
     elif r.get() == 2 :
         l_speed.config(text='Fans Mode : Performance')
+
 
 
 r = tk.IntVar()
